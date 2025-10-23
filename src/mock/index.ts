@@ -1,6 +1,8 @@
 import Mock from 'mockjs';
 
+import './auth';
 import './user';
+import './role';
 import './message-box';
 
 import '@/views/dashboard/workplace/mock';

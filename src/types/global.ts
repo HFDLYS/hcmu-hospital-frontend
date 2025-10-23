@@ -29,6 +29,11 @@ export interface Pagination {
   total?: number;
 }
 
+export interface listData<T> {
+  list: T[];
+  total: number;
+}
+
 export type TimeRanger = [string, string];
 
 export interface GeneralChart {
