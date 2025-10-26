@@ -4,7 +4,7 @@ export default {
   meta: {
     locale: 'menu.arcoWebsite',
     icon: 'icon-link',
-    requiresAuth: true,
-    order: 8,
+    requiresPerm: true,
+    order: 10,
   },
 };

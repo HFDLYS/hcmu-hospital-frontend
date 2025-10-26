@@ -44,16 +44,24 @@ const useAppStore = defineStore('app', {
     toggleMenu(value: boolean) {
       this.hideMenu = value;
     },
+
+    /**
+     * 获取服务端菜单配置
+     */
     async fetchServerMenuConfig() {
       let notifyInstance: NotificationReturn | null = null;
       try {
+        // 通知弹窗
         notifyInstance = Notification.info({
           id: 'menuNotice', // Keep the instance id the same
           content: 'loading',
           closable: true,
         });
+
+        // 调用获取服务端菜单api
         const { data } = await getMenuList();
         this.serverMenu = data;
+
         notifyInstance = Notification.success({
           id: 'menuNotice',
           content: 'success',

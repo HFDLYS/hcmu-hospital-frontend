@@ -4,22 +4,30 @@
       <icon-apps />
     </a-breadcrumb-item>
     <a-breadcrumb-item v-for="item in items" :key="item">
-      {{ $t(item) }}
+      {{ needTranslate ? $t(item) : item }}
     </a-breadcrumb-item>
   </a-breadcrumb>
 </template>
 
 <script lang="ts" setup>
-  import { PropType } from 'vue';
+  import { PropType, defineProps, computed } from 'vue';
 
-  defineProps({
+  const props = defineProps({
     items: {
       type: Array as PropType<string[]>,
       default() {
         return [];
       },
     },
+    needTranslate: {
+      type: Boolean,
+      default: true,
+      required: false,
+    },
   });
+
+  const items = computed(() => props.items);
+  const needTranslate = computed(() => props.needTranslate);
 </script>
 
 <style scoped lang="less">

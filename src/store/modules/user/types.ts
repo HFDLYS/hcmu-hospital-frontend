@@ -1,20 +1,20 @@
-export type RoleType = '' | '*' | 'admin' | 'user';
+import { PermissionType } from '@/store/modules/app/types';
+
 export interface UserState {
-  userId?: number;
-  name?: string;
+  userName: string;
+  userId: number;
+  nickname: string;
+  sex?: string;
+  age?: number;
   avatar?: string;
+  score: number;
+  contribution: number;
   job?: string;
-  organization?: string;
-  location?: string;
+  branchName?: string;
+  branchId?: number;
   email?: string;
-  introduction?: string;
-  personalWebsite?: string;
-  jobName?: string;
-  organizationName?: string;
-  locationName?: string;
   phone?: string;
-  registrationDate?: string;
-  accountId?: string;
-  certification?: number;
-  role: RoleType;
+  roleId: number;
+  roleName: string;
+  permissions: PermissionType[];
 }

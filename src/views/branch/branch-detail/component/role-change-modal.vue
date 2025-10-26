@@ -1,0 +1,121 @@
+<template>
+  <a-modal
+    :visible="visible"
+    :title="$t('memberList.columns.editModal.title')"
+    unmount-on-close
+    draggable
+    ok-text="确认"
+    cancel-text="取消"
+    @ok="handleEditOk"
+    @cancel="handleEditCancel"
+  >
+    <a-form :model="editForm">
+      <a-form-item :label="t('memberList.columns.editModal.roleName')">
+        <a-select v-model="editForm.roleId as number">
+          <a-option
+            v-for="(item, index) in roleList"
+            :key="index"
+            :value="item.roleId"
+            :label="item.roleName"
+          ></a-option>
+        </a-select>
+      </a-form-item>
+    </a-form>
+  </a-modal>
+</template>
+
+<script lang="ts" setup>
+  import { computed, defineProps, onMounted, ref, watch, PropType } from 'vue';
+  import { getAllRoles, RoleItem } from '@/api/role';
+  import { RoleType } from '@/store/modules/app/types';
+  import { Message } from '@arco-design/web-vue';
+  import { setBranchRole, UpdateBranchRoleParams } from '@/api/branch';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
+
+  const props = defineProps({
+    branchId: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+    userId: {
+      type: Number,
+      default: 0,
+      required: true,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
+      required: true,
+    },
+    setVisible: {
+      type: Function,
+      default: Function as PropType<() => void>,
+      required: true,
+    },
+    reload: {
+      type: Function,
+      default: Function as PropType<() => void>,
+      required: true,
+    },
+  });
+
+  const userId = computed(() => props.userId);
+  const branchId = computed(() => props.branchId);
+  const visible = computed(() => props.visible);
+  const roleList = ref<RoleItem[]>([]);
+
+  const editForm = ref<UpdateBranchRoleParams>({
+    roleId: null,
+  });
+
+  const fetchRole = async () => {
+    if (roleList.value.length === 0) {
+      try {
+        const res = await getAllRoles({
+          type: RoleType.BRANCH_TYPE,
+        });
+        roleList.value = res.data as RoleItem[];
+      } catch (err) {
+        if (err instanceof Error) {
+          Message.error(err.message);
+        } else {
+          // 处理非 Error 类型的错误
+          Message.error(String(err));
+        }
+      }
+    }
+  };
+
+  const handleEditOk = async () => {
+    try {
+      await setBranchRole(branchId.value, userId.value, editForm.value);
+      Message.success(t('memberList.columns.editModal.success'));
+      props.reload();
+    } catch (err) {
+      if (err instanceof Error) {
+        Message.error(err.message);
+      } else {
+        // 处理非 Error 类型的错误
+        Message.error(String(err));
+      }
+    }
+    props.setVisible(false);
+  };
+
+  const handleEditCancel = () => {
+    props.setVisible(false);
+  };
+
+  onMounted(() => {
+    fetchRole();
+  });
+
+  watch(visible, (val) => {
+    if (val) {
+      editForm.value.roleId = null;
+    }
+  });
+</script>

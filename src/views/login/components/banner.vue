@@ -63,16 +63,16 @@
     }
 
     &-title {
-      color: var(--color-fill-1);
+      color: white;
       font-weight: 500;
-      font-size: 20px;
+      font-size: 35px;
       line-height: 28px;
     }
 
     &-sub-title {
-      margin-top: 8px;
+      margin-top: 15px;
       color: var(--color-text-3);
-      font-size: 14px;
+      font-size: 20px;
       line-height: 22px;
     }
 

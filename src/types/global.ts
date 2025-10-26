@@ -1,3 +1,5 @@
+import { PermissionType } from '@/store/modules/app/types';
+
 export interface AnyObject {
   [key: string]: unknown;
 }
@@ -26,11 +28,6 @@ export interface PostData {
 export interface Pagination {
   current: number;
   pageSize: number;
-  total?: number;
-}
-
-export interface listData<T> {
-  list: T[];
   total: number;
 }
 
@@ -39,4 +36,19 @@ export type TimeRanger = [string, string];
 export interface GeneralChart {
   xAxis: string[];
   data: Array<{ name: string; value: number[] }>;
+}
+
+export interface listData<T> {
+  list: T[];
+  total: number;
+}
+
+export interface PermissionVerify {
+  permissions?: PermissionType[];
+  permissionsTarget: PermissionType[];
+}
+
+export interface PermissionVerify2 {
+  id: number;
+  permissionsRequired: PermissionType[];
 }

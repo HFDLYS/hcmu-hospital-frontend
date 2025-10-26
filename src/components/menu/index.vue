@@ -8,6 +8,16 @@
   import { openWindow, regexUrl } from '@/utils';
   import useMenuTree from './use-menu-tree';
 
+  /* eslint-disable @typescript-eslint/no-namespace */
+  declare global {
+    namespace JSX {
+      interface IntrinsicElements {
+        [elem: string]: any;
+      }
+    }
+  }
+  /* eslint-enable @typescript-eslint/no-namespace */
+
   export default defineComponent({
     emit: ['collapse'],
     setup() {
@@ -15,6 +25,7 @@
       const appStore = useAppStore();
       const router = useRouter();
       const route = useRoute();
+      // 获取菜单树 如果服务器返回了路由信息则使用服务器返回的路由信息 如果没有则使用浏览器端的路由信息
       const { menuTree } = useMenuTree();
       const collapsed = computed({
         get() {
@@ -70,8 +81,8 @@
         return result;
       };
       listenerRouteChange((newRoute) => {
-        const { requiresAuth, activeMenu, hideInMenu } = newRoute.meta;
-        if (requiresAuth && (!hideInMenu || activeMenu)) {
+        const { requiresPerm, activeMenu, hideInMenu } = newRoute.meta;
+        if (requiresPerm && (!hideInMenu || activeMenu)) {
           const menuOpenKeys = findMenuOpenKeys(
             (activeMenu || newRoute.name) as string
           );
@@ -135,7 +146,7 @@
           selected-keys={selectedKey.value}
           auto-open-selected={true}
           level-indent={34}
-          style="height: 100%;width:100%;"
+          style="height: 100%;width:100%; caret-color: transparent"
           onCollapse={setCollapse}
         >
           {renderSubMenu()}
@@ -151,6 +162,7 @@
       display: flex;
       align-items: center;
     }
+
     .arco-icon {
       &:not(.arco-icon-down) {
         font-size: 18px;

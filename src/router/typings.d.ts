@@ -1,9 +1,15 @@
 import 'vue-router';
 
 declare module 'vue-router' {
+  // meta数据部分的格式
   interface RouteMeta {
     roles?: string[]; // Controls roles that have access to the page
-    requiresAuth: boolean; // Whether login is required to access the current page (every route must declare)
+
+    // 增加权限字段
+    permission?: string; // Controls permissions accessed to the page
+
+    requiresPerm: boolean; // Whether login is required to access the current page (every route must declare)
+
     icon?: string; // The icon show in the side menu
     locale?: string; // The locale name show in side menu and breadcrumb
     hideInMenu?: boolean; // If true, it is not displayed in the side menu

@@ -1,6 +1,5 @@
 import { ref, UnwrapRef } from 'vue';
 import { AxiosResponse } from 'axios';
-import { HttpResponse } from '@/api/interceptor';
 import useLoading from './loading';
 
 // use to fetch list
@@ -8,14 +7,14 @@ import useLoading from './loading';
 // Use the bind function to add parameters
 // example: useRequest(api.bind(null, {}))
 
-export default function useRequest<T>(
-  api: () => Promise<AxiosResponse<HttpResponse>>,
+export default async function useRequest<T>(
+  api: () => Promise<AxiosResponse<T>>,
   defaultValue = [] as unknown as T,
   isLoading = true
 ) {
   const { loading, setLoading } = useLoading(isLoading);
   const response = ref<T>(defaultValue);
-  api()
+  await api()
     .then((res) => {
       response.value = res.data as unknown as UnwrapRef<T>;
     })

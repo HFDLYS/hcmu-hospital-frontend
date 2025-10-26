@@ -1,34 +1,36 @@
 import { defineStore } from 'pinia';
+import { getUserById as getUserInfo, getPermissions } from '@/api/user';
 import {
   login as userLogin,
   logout as userLogout,
-  LoginData,
+  LoginParams,
 } from '@/api/auth';
-import { getUserInfo } from '@/api/user';
-import { setToken, clearToken } from '@/utils/auth';
+import { setToken, clearToken, getUserId, setUserId } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
 import { UserState } from './types';
 import useAppStore from '../app';
+import useTabBarStore from '../tab-bar';
 
 const useUserStore = defineStore('user', {
   state: (): UserState => ({
-    userId: undefined,
-    name: undefined,
-    avatar: undefined,
+    userName: '',
+    userId: 0,
+    roleId: 0,
+    roleName: '',
+    nickname: '',
+    // TODO: 处理用户头像
+    avatar: '/src/assets/admin.png',
     job: undefined,
-    organization: undefined,
-    location: undefined,
     email: undefined,
-    introduction: undefined,
-    personalWebsite: undefined,
-    jobName: undefined,
-    organizationName: undefined,
-    locationName: undefined,
     phone: undefined,
-    registrationDate: undefined,
-    accountId: undefined,
-    certification: undefined,
-    role: '',
+    contribution: 0,
+    score: 0,
+    sex: undefined,
+    age: undefined,
+    branchName: undefined,
+    branchId: undefined,
+
+    permissions: [],
   }),
 
   getters: {
@@ -38,15 +40,13 @@ const useUserStore = defineStore('user', {
   },
 
   actions: {
-    switchRoles() {
-      return new Promise((resolve) => {
-        this.role = this.role === 'user' ? 'admin' : 'user';
-        resolve(this.role);
-      });
-    },
     // Set user's information
     setInfo(partial: Partial<UserState>) {
       this.$patch(partial);
+    },
+
+    isSelf(userId: number): boolean {
+      return this.userId === userId;
     },
 
     // Reset user's information
@@ -56,18 +56,19 @@ const useUserStore = defineStore('user', {
 
     // Get user's information
     async info() {
-      const res = await getUserInfo();
-
-      this.setInfo(res.data);
+      const userId = getUserId();
+      // 获得基本信息
+      const basicInfo = await getUserInfo(userId);
+      const sysPerm = await getPermissions();
+      this.setInfo({ ...basicInfo.data, permissions: sysPerm.data });
     },
 
     // Login
-    async login(loginForm: LoginData) {
+    async login(loginForm: LoginParams) {
       try {
         const res = await userLogin(loginForm);
         setToken(res.data.token);
-        // 保存 userId
-        this.userId = res.data.userId;
+        setUserId(res.data.userId);
       } catch (err) {
         clearToken();
         throw err;
@@ -75,17 +76,17 @@ const useUserStore = defineStore('user', {
     },
     logoutCallBack() {
       const appStore = useAppStore();
+      const tabBarStore = useTabBarStore();
       this.resetInfo();
       clearToken();
       removeRouteListener();
       appStore.clearServerMenu();
+      tabBarStore.resetTabList();
     },
     // Logout
     async logout() {
       try {
-        if (this.userId) {
-          await userLogout(this.userId);
-        }
+        await userLogout(getUserId());
       } finally {
         this.logoutCallBack();
       }

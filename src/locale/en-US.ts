@@ -1,31 +1,14 @@
 import localeMessageBox from '@/components/message-box/locale/en-US';
+import localeListBoard from '@/components/list-board/locale/en-US';
+
 import localeLogin from '@/views/login/locale/en-US';
+import localeBranch from '@/views/branch/locale/en-US';
+import localePersonal from '@/views/personal/locale/en-US';
+import localeLogPage from '@/views/logPage/log-page/locale/en-US';
 
-import localeWorkplace from '@/views/dashboard/workplace/locale/en-US';
-
-import localeMonitor from '@/views/dashboard/monitor/locale/en-US';
-
-import localeSearchTable from '@/views/list/search-table/locale/en-US';
-import localeCardList from '@/views/list/card/locale/en-US';
-
-import localeStepForm from '@/views/form/step/locale/en-US';
-import localeGroupForm from '@/views/form/group/locale/en-US';
-
-import localeBasicProfile from '@/views/profile/basic/locale/en-US';
-
-import localeDataAnalysis from '@/views/visualization/data-analysis/locale/en-US';
-import localeMultiDAnalysis from '@/views/visualization/multi-dimension-data-analysis/locale/en-US';
-
-import localeSuccess from '@/views/result/success/locale/en-US';
-import localeError from '@/views/result/error/locale/en-US';
-
-import locale403 from '@/views/exception/403/locale/en-US';
-import locale404 from '@/views/exception/404/locale/en-US';
-import locale500 from '@/views/exception/500/locale/en-US';
-
-import localeUserInfo from '@/views/user/info/locale/en-US';
-import localeUserSetting from '@/views/user/setting/locale/en-US';
-
+import localePersonnel from '@/views/personnel/locale/en-US';
+import localeSystem from '@/views/system/locale/en-US';
+import localeState from '@/utils/state/locale/en-US';
 import localeSettings from './en-US/settings';
 
 export default {
@@ -44,24 +27,27 @@ export default {
   'menu.faq': 'FAQ',
   'navbar.docs': 'Docs',
   'navbar.action.locale': 'Switch to English',
+
+  'menu.announcement': 'Announcement center',
+  'menu.personal': 'Personal center',
+  'menu.personnel': 'Personnel center',
+  'menu.score': 'Score center',
+  'menu.logPage': 'System logs',
+  'menu.project': 'Project center',
+  'menu.branch': 'Branch center',
+  'menu.competition': 'Contest center',
+  'menu.system': 'System settings',
+  'menu.display': 'Project display',
+  'menu.about': 'About',
+
+  ...localeSystem,
+  ...localeState,
   ...localeSettings,
   ...localeMessageBox,
+  ...localeListBoard,
   ...localeLogin,
-  ...localeWorkplace,
-
-  ...localeMonitor,
-  ...localeSearchTable,
-  ...localeCardList,
-  ...localeStepForm,
-  ...localeGroupForm,
-  ...localeBasicProfile,
-  ...localeDataAnalysis,
-  ...localeMultiDAnalysis,
-  ...localeSuccess,
-  ...localeError,
-  ...locale403,
-  ...locale404,
-  ...locale500,
-  ...localeUserInfo,
-  ...localeUserSetting,
+  ...localeBranch,
+  ...localePersonal,
+  ...localePersonnel,
+  ...localeLogPage,
 };

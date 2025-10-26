@@ -6,6 +6,7 @@ export type Component<T = any> =
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>);
 
+// 自定义路由部分数据的格式
 export interface AppRouteRecordRaw {
   path: string;
   name?: string | symbol;

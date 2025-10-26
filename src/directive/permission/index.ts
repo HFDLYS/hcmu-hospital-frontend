@@ -1,22 +1,26 @@
 import { DirectiveBinding } from 'vue';
 import { useUserStore } from '@/store';
+import { PermissionVerify } from '@/types/global';
 
-function checkPermission(el: HTMLElement, binding: DirectiveBinding) {
+// 如果用户没有指定的所有权限，则删除元素
+function checkPermission(
+  el: HTMLElement,
+  binding: DirectiveBinding<PermissionVerify>
+) {
   const { value } = binding;
+  const { permissionsTarget } = value;
   const userStore = useUserStore();
-  const { role } = userStore;
+  const { permissions } = userStore;
 
-  if (Array.isArray(value)) {
-    if (value.length > 0) {
-      const permissionValues = value;
-
-      const hasPermission = permissionValues.includes(role);
-      if (!hasPermission && el.parentNode) {
-        el.parentNode.removeChild(el);
-      }
+  if (permissionsTarget.length > 0) {
+    const hasPermission = permissionsTarget.every((permission) => {
+      return permissions.includes(permission);
+    });
+    if (!hasPermission && el.parentNode) {
+      el.parentNode.removeChild(el);
     }
   } else {
-    throw new Error(`need roles! Like v-permission="['admin','user']"`);
+    throw new Error(`check permission error!`);
   }
 }
 
