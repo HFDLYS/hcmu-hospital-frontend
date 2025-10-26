@@ -25,6 +25,9 @@ importers:
       axios:
         specifier: ^0.24.0
         version: 0.24.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       dayjs:
         specifier: ^1.11.5
         version: 1.11.13
@@ -52,6 +55,9 @@ importers:
       vue:
         specifier: ^3.2.40
         version: 3.5.13(typescript@4.9.5)
+      vue-demi:
+        specifier: ^0.13.11
+        version: 0.13.11(vue@3.5.13(typescript@4.9.5))
       vue-echarts:
         specifier: ^6.2.3
         version: 6.7.3(@vue/runtime-core@3.5.13)(echarts@5.6.0)(vue@3.5.13(typescript@4.9.5))
@@ -71,6 +77,9 @@ importers:
       '@commitlint/config-conventional':
         specifier: ^17.1.0
         version: 17.8.1
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
       '@types/lodash':
         specifier: ^4.14.186
         version: 4.17.14
@@ -545,6 +554,9 @@ packages:
 
   '@tsconfig/node16@1.0.4':
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+
+  '@types/crypto-js@4.2.2':
+    resolution: {integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==}
 
   '@types/eslint@8.56.12':
     resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
@@ -1331,6 +1343,9 @@ packages:
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
     engines: {node: '>= 8'}
+
+  crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
 
   css-functions-list@3.2.3:
     resolution: {integrity: sha512-IQOkD3hbR5KrN93MtcYuad6YPuTSUhntLHDuLEbFWE+ff2/XSZNdZG+LcbbIW5AXKg/WFIfYItIzVoHngHXZzA==}
@@ -5464,6 +5479,8 @@ snapshots:
 
   '@tsconfig/node16@1.0.4': {}
 
+  '@types/crypto-js@4.2.2': {}
+
   '@types/eslint@8.56.12':
     dependencies:
       '@types/estree': 1.0.6
@@ -5782,7 +5799,7 @@ snapshots:
       '@types/web-bluetooth': 0.0.16
       '@vueuse/metadata': 9.13.0
       '@vueuse/shared': 9.13.0(vue@3.5.13(typescript@4.9.5))
-      vue-demi: 0.14.10(vue@3.5.13(typescript@4.9.5))
+      vue-demi: 0.13.11(vue@3.5.13(typescript@4.9.5))
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -5791,7 +5808,7 @@ snapshots:
 
   '@vueuse/shared@9.13.0(vue@3.5.13(typescript@4.9.5))':
     dependencies:
-      vue-demi: 0.14.10(vue@3.5.13(typescript@4.9.5))
+      vue-demi: 0.13.11(vue@3.5.13(typescript@4.9.5))
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -6398,6 +6415,8 @@ snapshots:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  crypto-js@4.2.0: {}
 
   css-functions-list@3.2.3: {}
 

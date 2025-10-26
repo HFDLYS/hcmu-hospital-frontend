@@ -6,11 +6,14 @@ export interface RoleItem {
   roleId: number;
   roleName: string;
   roleInfo: string;
+  isDefault: number;
 }
 
 export interface PermItem {
   permissionId: number;
   name: string;
+  // 角色类型 1: 系统权限 2: 项目权限 3: 部门权限
+  type: number;
 }
 
 // 参数接口
@@ -22,6 +25,7 @@ export interface UpdateRolePermissionsParams {
 export interface CreateRoleParams {
   roleName: string;
   roleInfo: string;
+  type: number;
   permissionList?: any[];
 }
 
@@ -29,6 +33,7 @@ export interface CreateRoleRes {
   roleId: number;
   roleName: string;
   roleInfo: string;
+  type: number;
 }
 
 export interface UpdateRoleParams {
@@ -40,6 +45,7 @@ export interface RoleGetRequestDTO {
   [key: string]: string | number | undefined;
   roleId?: number;
   roleName?: string;
+  type?: number;
 }
 
 /**

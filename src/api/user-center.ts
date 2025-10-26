@@ -39,15 +39,6 @@ export function saveUserInfo() {
   return axios.post('/api/user/save-info');
 }
 
-export interface BasicInfoModel {
-  email: string;
-  nickname: string;
-  countryRegion: string;
-  area: string;
-  address: string;
-  profile: string;
-}
-
 export interface EnterpriseCertificationModel {
   accountType: number;
   status: number;
@@ -85,4 +76,14 @@ export function userUploadApi(
 ) {
   // const controller = new AbortController();
   return axios.post('/api/user/upload', data, config);
+}
+
+export function uploadFile(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+  return axios.post('/users/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 }

@@ -1,17 +1,10 @@
 import axios from 'axios';
-import type { RouteRecordNormalized } from 'vue-router';
 import { UserState } from '@/store/modules/user/types';
+import { PermissionType } from '@/store/modules/app/types';
+import { RouteRecordNormalized } from 'vue-router';
 import { listData } from '@/types/global';
 
 const base = '/users';
-
-export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
-}
-
-export function getMenuList() {
-  return axios.post<RouteRecordNormalized[]>('/api/user/menu');
-}
 
 export interface UserUpdateDTO {
   phone?: string;
@@ -27,21 +20,44 @@ export interface UserPasswordDTO {
   checkPassword: string;
 }
 
+export const updateUserInfo = (id: number, params: UserUpdateDTO) => {
+  return axios.put(`${base}/${id}`, params);
+};
+
 export interface UserGetRequestDTO {
   [key: string]: string | number | undefined;
-  userAccount?: string;
   userName?: string;
+  nickname?: string;
+  branchName?: string;
   roleName?: string;
   pageNum: number;
   pageSize: number;
 }
 
+export interface ProjectGetDTO {
+  [key: string]: string | number | undefined;
+  projectName?: string;
+  roleName?: string;
+  pageNum: number;
+  pageSize: number;
+}
+
+export interface ProjectRecord {
+  projectId: number;
+  projectName: string;
+  labelId: number;
+  info: string;
+  roleName: string;
+}
+
 export interface SysMemberRecord {
   userId: number;
+  nickname: string;
   userName: string;
-  userAccount: string;
   roleId: string;
   roleName: string;
+  branchId: string;
+  branchName: string;
 }
 
 // 参数接口
@@ -69,19 +85,19 @@ export interface VerifyEmailCodeParams {
   email: string;
 }
 
-/**
- * 根据id获取用户信息
- */
+// 根据id获取用户信息
 export function getUserById(userId: number) {
   return axios.get<UserState>(`${base}/${userId}`);
 }
 
-/**
- * 更新用户信息
- */
-export const updateUserInfo = (id: number, params: UserUpdateDTO) => {
-  return axios.put(`${base}/${id}`, params);
-};
+// 获取系统权限列表
+export function getPermissions() {
+  return axios.get<PermissionType[]>(`${base}/permissions`);
+}
+
+export function getMenuList() {
+  return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+}
 
 /**
  * 获取所有用户的信息
@@ -103,6 +119,27 @@ export function getAllUsers(userGetRequestDTO: UserGetRequestDTO) {
   return axios.get<listData<SysMemberRecord>>(url);
 }
 
+/**
+ * 获取项目信息
+ * @param {string} userId
+ * @param projectGetDTO
+ * @returns
+ */
+export function getProjectByUserId(
+  userId: number,
+  projectGetDTO: ProjectGetDTO
+) {
+  let url = `${base}/${userId}/projects?`;
+
+  Object.keys(projectGetDTO).forEach((key) => {
+    if (projectGetDTO[key]) {
+      url += `${key}=${encodeURIComponent(projectGetDTO[key] as string)}&`;
+    }
+  });
+  url = url.slice(0, -1);
+
+  return axios.get<listData<ProjectRecord>>(url);
+}
 /**
  * 获取用户信息字段
  * @param {string} userId
@@ -141,9 +178,6 @@ export function updateUserRole(userId: number, params: UpdateUserRoleParams) {
   return axios.put(`${base}/${userId}/role`, params);
 }
 
-/**
- * 修改密码
- */
 export function updatePassword(params: UserPasswordDTO) {
   return axios.post(`${base}/password`, params);
 }

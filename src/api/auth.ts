@@ -4,25 +4,18 @@ import axios from 'axios';
 const base = '/auth';
 
 export interface LoginParams {
-  userAccount?: string;
+  userName?: string;
   password?: string;
 }
-
-// 兼容旧的 LoginData 类型名称
-export interface LoginData {
-  username: string;
-  password: string;
-}
-
 export interface LoginRes {
   token: string;
   userId: number;
 }
 
 export interface RegisterParams {
-  userAccount: string;
-  password: string;
   userName: string;
+  password: string;
+  nickname: string;
   checkPassword: string;
   phone?: string;
   email: string;
@@ -58,10 +51,10 @@ export function logout(userId: number) {
 /**
  * 用户发起注册
  * @param {object} params UserRegisterDTO
- * @param {string} params.userAccount
+ * @param {string} params.userName
  * @param {string} params.password
  * @param {string} params.checkPassword
- * @param {string} params.userName
+ * @param {string} params.nickname
  * @param {string} params.phone
  * @param {string} params.email
  * @param {string} params.code
