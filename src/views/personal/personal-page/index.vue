@@ -29,9 +29,6 @@
   import { UserState } from '@/store/modules/user/types';
   import { checkSimplePerm } from '@/utils/permission';
   import UserInfoHeader from './components/user-info-header.vue';
-  import LatestNotification from './components/latest-notification.vue';
-  import MyProject from './components/my-project.vue';
-  import LatestActivity from './components/latest-activity.vue';
 
   const route = useRoute();
   const userStore = useUserStore() as UserState;

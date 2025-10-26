@@ -15,7 +15,9 @@
         <a-space :size="18">
           <div>
             <icon-user />
-            <a-typography-text>{{ userInfo.userName }}</a-typography-text>
+            <a-typography-text>{{
+              userInfo.userName + '-' + userInfo.name
+            }}</a-typography-text>
           </div>
           <div>
             <icon-phone />
@@ -59,9 +61,8 @@
     userId: 0,
     nickname: '',
     userName: '',
+    name: '',
     permissions: [],
-    score: 0,
-    contribution: 0,
     avatar: '',
     roleId: 0,
     roleName: '',
@@ -103,14 +104,6 @@
     } else {
       console.log('branchId is null');
     }
-  };
-
-  const onScoreClick = () => {
-    isScoreHistoryVisible.value = true;
-  };
-
-  const handleScoreHistoryOk = () => {
-    isScoreHistoryVisible.value = false;
   };
 
   onMounted(() => {

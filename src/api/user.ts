@@ -34,22 +34,6 @@ export interface UserGetRequestDTO {
   pageSize: number;
 }
 
-export interface ProjectGetDTO {
-  [key: string]: string | number | undefined;
-  projectName?: string;
-  roleName?: string;
-  pageNum: number;
-  pageSize: number;
-}
-
-export interface ProjectRecord {
-  projectId: number;
-  projectName: string;
-  labelId: number;
-  info: string;
-  roleName: string;
-}
-
 export interface SysMemberRecord {
   userId: number;
   nickname: string;
@@ -58,17 +42,6 @@ export interface SysMemberRecord {
   roleName: string;
   branchId: string;
   branchName: string;
-}
-
-// 参数接口
-export interface UpdateUserFieldParams {
-  value?: string;
-}
-
-export interface UserFieldDTO {
-  fieldId: number;
-  fieldName: string;
-  value: string;
 }
 
 export interface UpdateUserRoleParams {
@@ -117,54 +90,6 @@ export function getAllUsers(userGetRequestDTO: UserGetRequestDTO) {
   url = url.slice(0, -1);
 
   return axios.get<listData<SysMemberRecord>>(url);
-}
-
-/**
- * 获取项目信息
- * @param {string} userId
- * @param projectGetDTO
- * @returns
- */
-export function getProjectByUserId(
-  userId: number,
-  projectGetDTO: ProjectGetDTO
-) {
-  let url = `${base}/${userId}/projects?`;
-
-  Object.keys(projectGetDTO).forEach((key) => {
-    if (projectGetDTO[key]) {
-      url += `${key}=${encodeURIComponent(projectGetDTO[key] as string)}&`;
-    }
-  });
-  url = url.slice(0, -1);
-
-  return axios.get<listData<ProjectRecord>>(url);
-}
-/**
- * 获取用户信息字段
- * @param {string} userId
- * @param fieldIds
- * @returns
- */
-export function getUserFieldByUserId(userId: number, fieldIds: number[]) {
-  const queryString = fieldIds.length ? `?fieldIds=${fieldIds.join(',')}` : '';
-  return axios.get<UserFieldDTO[]>(`${base}/${userId}/fields${queryString}`);
-}
-
-/**
- * 更新用户信息字段
- * @param {string} userId
- * @param {string} fieldId
- * @param {object} params FieldValueDTO
- * @param {string} params.value
- * @returns
- */
-export function updateUserField(
-  userId: number,
-  fieldId: number,
-  params: UpdateUserFieldParams
-) {
-  return axios.put(`${base}/${userId}/fields/${fieldId}`, params);
 }
 
 /**

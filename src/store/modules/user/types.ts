@@ -3,12 +3,11 @@ import { PermissionType } from '@/store/modules/app/types';
 export interface UserState {
   userName: string;
   userId: number;
-  nickname: string;
+  nickname?: string;
+  name: string;
   sex?: string;
   age?: number;
   avatar?: string;
-  score: number;
-  contribution: number;
   job?: string;
   branchName?: string;
   branchId?: number;

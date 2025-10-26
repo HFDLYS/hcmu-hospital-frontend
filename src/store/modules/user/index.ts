@@ -18,12 +18,12 @@ const useUserStore = defineStore('user', {
     roleId: 0,
     roleName: '',
     nickname: '',
+    name: '',
     // TODO: 处理用户头像
     avatar: '/src/assets/admin.png',
     job: undefined,
     email: undefined,
     phone: undefined,
-    contribution: 0,
     score: 0,
     sex: undefined,
     age: undefined,
