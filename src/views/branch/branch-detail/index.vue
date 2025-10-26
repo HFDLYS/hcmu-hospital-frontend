@@ -55,7 +55,7 @@
   import { useRouter, useRoute } from 'vue-router';
   import { getBranchById, BranchRecord } from '@/api/branch';
   import useLoading from '@/hooks/loading';
-  import { loadBranchPermissions } from '@/hooks/loadPermissions';
+  import loadBranchPermissions from '@/hooks/loadPermissions';
   import { PermissionType } from '@/store/modules/app/types';
   import useVisible from '@/hooks/visible';
   import { Message } from '@arco-design/web-vue';
