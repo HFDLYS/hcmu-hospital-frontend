@@ -71,19 +71,19 @@
     return [
       {
         label: 'userSetting.label.username',
-        value: userStore.nickname,
+        value: String(userStore.nickname ?? ''),
       },
       {
         label: 'userSetting.label.role',
-        value: userStore.roleName,
+        value: String(userStore.roleName ?? ''),
       },
       {
         label: 'userSetting.label.phone',
-        value: userStore.phone as string,
+        value: String(userStore.phone ?? ''),
       },
       {
         label: 'userSetting.label.email',
-        value: userStore.email as string,
+        value: String(userStore.email ?? ''),
       },
     ];
   };

@@ -24,7 +24,6 @@ const useUserStore = defineStore('user', {
     job: undefined,
     email: undefined,
     phone: undefined,
-    score: 0,
     sex: undefined,
     age: undefined,
     branchName: undefined,
