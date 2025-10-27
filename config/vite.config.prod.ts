@@ -14,6 +14,13 @@ export default mergeConfig(
       configArcoResolverPlugin(),
       configImageminPlugin(),
     ],
+    server: {
+      open: false,
+      port: 3000,
+      fs: {
+        strict: true,
+      },
+    },
     build: {
       rollupOptions: {
         output: {
