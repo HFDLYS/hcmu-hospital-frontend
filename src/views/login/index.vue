@@ -1,11 +1,7 @@
 <template>
   <div class="container">
     <div class="logo">
-      <img
-        alt="logo"
-        src="/src/assets/images/logo.png"
-        style="width: auto; height: 30px"
-      />
+      <img alt="logo" :src="logo" style="width: auto; height: 30px" />
       <h1 class="logo-text">{{ $t('login.brand') }}</h1>
     </div>
     <div class="content">
@@ -77,6 +73,7 @@
   import { useAppStore } from '@/store';
   import { useDark, useToggle } from '@vueuse/core';
   import Footer from '@/components/footer/index.vue';
+  import logo from '@/assets/images/logo.png';
   import LoginBanner from './components/banner.vue';
   import LoginForm from './components/login-form.vue';
 
