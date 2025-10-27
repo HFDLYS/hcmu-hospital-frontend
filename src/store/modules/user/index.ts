@@ -7,6 +7,7 @@ import {
 } from '@/api/auth';
 import { setToken, clearToken, getUserId, setUserId } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
+import adminAvatar from '@/assets/admin.png';
 import { UserState } from './types';
 import useAppStore from '../app';
 import useTabBarStore from '../tab-bar';
@@ -20,7 +21,7 @@ const useUserStore = defineStore('user', {
     nickname: '',
     name: '',
     // TODO: 处理用户头像
-    avatar: '/src/assets/admin.png',
+    avatar: adminAvatar,
     job: undefined,
     email: undefined,
     phone: undefined,
