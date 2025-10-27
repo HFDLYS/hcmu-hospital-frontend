@@ -16,8 +16,7 @@ env:
   IMAGE_NAME: hcmu-hospital-frontend
   IMAGE_TAG: latest  # Docker Image 的 tag，为了方便我直接设置 latest
   PORT: 3000  # 服务要暴露的端口，可以改
-  API_PORT: 8088
-  DEV_API_PORT: 8080
+  API_PORT: 8080
 
 jobs:
   build:
@@ -43,7 +42,7 @@ jobs:
       run: |
           if [ -n "${{ secrets.API_HOST }}" ]; then
             # 使用设置中的接口地址
-            echo -e "\nVITE_API_BASE_URL='http://${{ secrets.API_HOST }}:${{ env.API_PORT }}'" >> .env.production
+            echo -e "\nVITE_API_BASE_URL='${{ secrets.API_HOST }}:${{ env.API_PORT }}'" >> .env.production
           fi
           
     - name: 打包项目
@@ -58,7 +57,7 @@ jobs:
       uses: docker/login-action@v2
       with:
         registry: ${{ env.ALIYUN_REGISTRY }}
-        nickname: ${{ secrets.ALIYUN_DOCKER_HUB_USER }}
+        username: ${{ secrets.ALIYUN_DOCKER_HUB_USER }}
         password: ${{ secrets.ALIYUN_DOCKER_HUB_TOKEN }}
 
     # Build and push Docker image with Buildx (don't push on PR)
@@ -68,7 +67,7 @@ jobs:
       with:
         context: ./docker
         push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        tags: ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
 
 # 连接到远程服务器
@@ -86,9 +85,9 @@ jobs:
       run: |
         ssh root@${{ secrets.SERVER_HOST }} "sudo docker stop ${{ env.IMAGE_NAME }} || true"
         ssh root@${{ secrets.SERVER_HOST }} "sudo docker rm ${{ env.IMAGE_NAME }} || true"
-        ssh root@${{ secrets.SERVER_HOST }} "sudo docker rmi ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} || true"
-        ssh root@${{ secrets.SERVER_HOST }} "sudo docker pull ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
-        ssh root@${{ secrets.SERVER_HOST }} "sudo docker run -p ${{ env.PORT }}:${{ env.PORT}} --name ${{ env.IMAGE_NAME }} -d ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker rmi ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} || true"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker pull ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker run -p ${{ env.PORT }}:${{ env.PORT}} --name ${{ env.IMAGE_NAME }} -d ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_NAMESPACE }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
 
 
