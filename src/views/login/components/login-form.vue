@@ -12,13 +12,13 @@
     >
       <a-form-item
         field="userName"
-        :rules="[{ required: true, message: $t('login.form.nickname.errMsg') }]"
+        :rules="[{ required: true, message: $t('login.form.username.errMsg') }]"
         :validate-trigger="['change', 'blur']"
         hide-label
       >
         <a-input
           v-model="userInfo.userName"
-          :placeholder="$t('login.form.nickname.placeholder')"
+          :placeholder="$t('login.form.username.placeholder')"
         >
           <template #prefix>
             <icon-user />
@@ -100,13 +100,9 @@
             </template>
           </a-input>
         </a-form-item>
-        <a-form-item
-          field="nickname"
-          :label="$t('register.form.name')"
-          name="nickname"
-        >
+        <a-form-item field="name" :label="$t('register.form.name')" name="name">
           <a-input
-            v-model="registerForm.nickname"
+            v-model="registerForm.name"
             :placeholder="$t('register.form.namePlaceholder')"
           >
             <template #prefix>
@@ -220,7 +216,7 @@
     userName: '',
     password: '',
     checkPassword: '',
-    nickname: '',
+    name: '',
     phone: '',
     email: '',
   });
