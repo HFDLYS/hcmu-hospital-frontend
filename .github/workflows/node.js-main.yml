@@ -1,0 +1,102 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI - main
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+
+  REGISTRY: docker.io  # 默认为 docker.io，即去 Docker Hub 上找
+  ALIYUN_REGISTRY: crpi-1kkkjpeehkoxqf8e.cn-shanghai.personal.cr.aliyuncs.com  # 从阿里云上寻找
+  IMAGE_NAME: hcmu-hospital-frontend
+  IMAGE_TAG: latest  # Docker Image 的 tag，为了方便我直接设置 latest
+  PORT: 3000  # 服务要暴露的端口，可以改
+  API_PORT: 8088
+  DEV_API_PORT: 8080
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 拉取最新文件
+      uses: actions/checkout@v3
+    
+    - name: 安装 node 20.11.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20.11.0
+
+    - name: 安装 pnpm
+      run: |
+        npm install -g pnpm
+        pnpm --version
+        
+      # 执行打包命令
+    - name: 设置项目API地址
+      run: |
+          if [ -n "${{ secrets.API_HOST }}" ]; then
+            # 使用设置中的接口地址
+            echo -e "\nVITE_API_BASE_URL='http://${{ secrets.API_HOST }}:${{ env.API_PORT }}'" >> .env.production
+          fi
+          
+    - name: 打包项目
+      run: |
+        node -v && pnpm -v && pnpm install && pnpm run build
+        cp ./dist ./docker -rf
+
+# Login against a Docker registry except on PR
+    ## https://github.com/docker/login-action
+    - name: 登录Docker Hub
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.ALIYUN_REGISTRY }}
+        nickname: ${{ secrets.ALIYUN_DOCKER_HUB_USER }}
+        password: ${{ secrets.ALIYUN_DOCKER_HUB_TOKEN }}
+
+    # Build and push Docker image with Buildx (don't push on PR)
+    # https://github.com/docker/build-push-action
+    - name: 构建并推送镜像文件至远程dockerHub
+      uses: docker/build-push-action@v3
+      with:
+        context: ./docker
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+
+# 连接到远程服务器
+    - name: 连接远程服务器
+      uses: webfactory/ssh-agent@v0.4.1
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+  # 初始化 knownhosts 在 GitHub Actions 作业中设置 SSH 密钥，以便安全地与远程服务器进行交互
+    - name: 启动 knownhosts
+      run: ssh-keyscan ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+# 触发服务器部署脚本
+    - name: 执行服务器脚本
+      run: |
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker stop ${{ env.IMAGE_NAME }} || true"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker rm ${{ env.IMAGE_NAME }} || true"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker rmi ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} || true"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker pull ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+        ssh root@${{ secrets.SERVER_HOST }} "sudo docker run -p ${{ env.PORT }}:${{ env.PORT}} --name ${{ env.IMAGE_NAME }} -d ${{ env.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_DOCKER_HUB_USER }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+
+
+
+
+
+
+
+
+
+
+      
