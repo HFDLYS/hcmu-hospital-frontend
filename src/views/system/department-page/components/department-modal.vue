@@ -127,7 +127,7 @@
         departmentOptions.value = data.data.list;
       }
     } catch (err) {
-      Message.error(t('departmentPage.message.fetchDepartmentsError'));
+      // Message.error(t('departmentPage.message.fetchDepartmentsError'));
     }
   };
 
