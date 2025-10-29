@@ -11,6 +11,8 @@ const excludedFiles = [
   './externalModules/arco.ts',
   './externalModules/faq.ts',
   './modules/competition.ts',
+  './modules/personnel.ts',
+  './modules/log.ts',
 ];
 
 /**

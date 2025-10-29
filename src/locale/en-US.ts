@@ -36,7 +36,12 @@ export default {
   'menu.project': 'Project center',
   'menu.branch': 'Branch center',
   'menu.competition': 'Contest center',
-  'menu.system': 'System settings',
+  'menu.system': 'System Management',
+  'menu.system.rolePage': 'Role Management',
+  'menu.system.departmentPage': 'Department Management',
+  'menu.system.personnelPage': 'Personnel Management',
+  'menu.system.logPage': 'System Logs',
+  'menu.system.doctorProfilePage': 'Doctor Profile Management',
   'menu.display': 'Project display',
   'menu.about': 'About',
 
