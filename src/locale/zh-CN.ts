@@ -37,7 +37,6 @@ export default {
   'menu.branch': '部门中心',
   'menu.competition': '比赛报名中心',
   'menu.system': '系统管理',
-  'menu.system.rolePage': '角色管理',
   'menu.system.departmentPage': '科室管理',
   'menu.system.personnelPage': '人事管理',
   'menu.system.logPage': '系统日志',
