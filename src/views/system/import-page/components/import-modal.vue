@@ -36,7 +36,7 @@
           v-model="fileList"
           :accept="'.xlsx,.xls,.csv'"
           :max-count="1"
-          :before-upload="handleBeforeUpload"
+          :on-before-upload="handleBeforeUpload"
           :show-file-list="true"
         >
           <a-button type="primary">

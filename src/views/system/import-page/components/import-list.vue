@@ -120,6 +120,7 @@
 
       <!-- 表格 -->
       <a-table
+        v-model:selected-keys="selectedKeys"
         row-key="id"
         :loading="loading"
         :pagination="pagination"
@@ -190,7 +191,7 @@
   // 表格数据
   const renderData = ref<PendingUserItem[]>([]);
   const size = ref<SizeProps>('medium');
-  const selectedKeys = ref<number[]>([]);
+  const selectedKeys = ref<(string | number)[]>([]); // 建议使用 (string | number)[] 类型
 
   // 分页
   const pagination = reactive<Pagination>({
@@ -249,6 +250,7 @@
     showCheckedAll: true,
     onlyCurrent: false,
     selectedRowKeys: selectedKeys.value,
+    // 使用 onChange 统一处理所有选择变化
     onSelect: (rowKeys: number[], record: PendingUserItem) => {
       selectedKeys.value = rowKeys;
     },
@@ -350,7 +352,8 @@
       cancelText: t('importPage.operation.cancel'),
       onOk: async () => {
         try {
-          await batchDeletePendingUsers(selectedKeys.value);
+          // 确保 selectedKeys 的类型与 API 匹配
+          await batchDeletePendingUsers(selectedKeys.value as number[]);
           Message.success(t('importPage.message.batchDeleteSuccess'));
           selectedKeys.value = [];
           fetchData();
