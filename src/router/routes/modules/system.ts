@@ -33,6 +33,16 @@ const SYSTEM: AppRouteRecordRaw = {
       },
     },
     {
+      path: 'import-page',
+      name: 'ImportPage',
+      component: () => import('@/views/system/import-page/index.vue'),
+      meta: {
+        locale: 'menu.system.importPage',
+        requiresPerm: true,
+        permission: 'PERSON_MG_PAGE',
+      },
+    },
+    {
       path: 'personnel-page',
       name: 'PersonnelPage',
       component: () => import('@/views/personnel/personnel-page/index.vue'),

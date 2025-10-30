@@ -38,6 +38,7 @@ export default {
   'menu.competition': 'Contest center',
   'menu.system': 'System Management',
   'menu.system.departmentPage': 'Department Management',
+  'menu.system.importPage': 'User Import',
   'menu.system.personnelPage': 'Personnel Management',
   'menu.system.logPage': 'System Logs',
   'menu.system.doctorProfilePage': 'Doctor Profile Management',

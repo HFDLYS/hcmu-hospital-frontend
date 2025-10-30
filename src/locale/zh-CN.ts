@@ -38,6 +38,7 @@ export default {
   'menu.competition': '比赛报名中心',
   'menu.system': '系统管理',
   'menu.system.departmentPage': '科室管理',
+  'menu.system.importPage': '用户导入',
   'menu.system.personnelPage': '人事管理',
   'menu.system.logPage': '系统日志',
   'menu.system.doctorProfilePage': '医生档案管理',
