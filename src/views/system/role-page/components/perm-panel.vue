@@ -66,8 +66,8 @@
 
   const cardTitles = ref<string[]>([
     'rolePage.sysPerm',
-    'rolePage.projectPerm',
-    'rolePage.branchPerm',
+    'rolePage.docterPerm',
+    'rolePage.patientPerm',
   ]);
 
   const props = defineProps({
@@ -101,25 +101,15 @@
 
   const saveChanges = async () => {
     const param: UpdateRolePermissionsParams[] = [];
-    let permList: PermItem[] = [];
-    let permListById: number[];
 
-    if (props.selectedType === 1) {
-      permList = permLists.value[0].concat(
-        permLists.value[1],
-        permLists.value[2]
-      );
-      permListById = permListByIds.value[0].concat(
-        permListByIds.value[1],
-        permListByIds.value[2]
-      );
-    } else if (props.selectedType === 2) {
-      [, permList] = permLists.value;
-      [, permListById] = permListByIds.value;
-    } else if (props.selectedType === 3) {
-      [, , permList] = permLists.value;
-      [, , permListById] = permListByIds.value;
-    }
+    const permList = permLists.value[0].concat(
+      permLists.value[1],
+      permLists.value[2]
+    );
+    const permListById = permListByIds.value[0].concat(
+      permListByIds.value[1],
+      permListByIds.value[2]
+    );
 
     permList.forEach((perm) => {
       param.push({
@@ -148,9 +138,9 @@
         permDisabled.value[index] = true;
       });
     } else {
-      permDisabled.value[0] = props.selectedType !== 1;
-      permDisabled.value[1] = props.selectedType === 3;
-      permDisabled.value[2] = props.selectedType === 2;
+      permDisabled.value[0] = false;
+      permDisabled.value[1] = false;
+      permDisabled.value[2] = false;
     }
   };
 
