@@ -135,10 +135,10 @@
   const fetchDepartmentDetail = async (id: number) => {
     try {
       const { data } = await getDepartmentById(id);
-      form.name = data.data.name;
-      form.description = data.data.description;
-      form.location = data.data.location;
-      form.parentId = data.data.parentId || undefined;
+      form.name = data.name;
+      form.description = data.description;
+      form.location = data.location;
+      form.parentId = data.parentId || undefined;
     } catch (err) {
       Message.error(t('departmentPage.message.fetchDetailError'));
     }
