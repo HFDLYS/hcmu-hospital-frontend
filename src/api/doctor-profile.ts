@@ -86,25 +86,25 @@ export function createDoctorProfile(params: DoctorProfileCreateDTO) {
 }
 
 /**
- * 获取医生档案详情
- * @param doctorProfileId
+ * 根据用户ID获取医生档案详情
+ * @param userId
  * @returns
  */
-export function getDoctorProfileById(doctorProfileId: number) {
-  return axios.get<DoctorProfileDetailDTO>(`${base}/${doctorProfileId}`);
+export function getDoctorProfileByUserId(userId: number) {
+  return axios.get<DoctorProfileDetailDTO>(`${base}/${userId}`);
 }
 
 /**
- * 更新医生档案('DOCTOR_MANAGE')
- * @param doctorProfileId
+ * 根据用户ID更新医生档案('ALT_DOCTOR')
+ * @param userId
  * @param params DoctorProfileUpdateDTO
  * @returns
  */
 export function updateDoctorProfile(
-  doctorProfileId: number,
+  userId: number,
   params: DoctorProfileUpdateDTO
 ) {
-  return axios.put<string>(`${base}/${doctorProfileId}`, params);
+  return axios.put<string>(`${base}/${userId}`, params);
 }
 
 /**
