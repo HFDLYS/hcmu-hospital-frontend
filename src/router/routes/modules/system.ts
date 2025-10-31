@@ -69,8 +69,8 @@ const SYSTEM: AppRouteRecordRaw = {
       component: () => import('@/views/system/doctor-profile-page/index.vue'),
       meta: {
         locale: 'menu.system.doctorProfilePage',
-        requiresPerm: false, // 临时关闭权限验证，方便测试
-        permission: 'DOCTOR_MG_PAGE',
+        requiresPerm: true,
+        permission: 'CHECK_DOCTOR',
       },
     },
   ],
