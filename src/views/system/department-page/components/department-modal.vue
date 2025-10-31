@@ -120,11 +120,11 @@
       });
       // 如果是编辑模式，过滤掉当前科室（避免将自己设为父科室）
       if (props.isEdit && props.departmentId) {
-        departmentOptions.value = data.data.list.filter(
-          (dept) => dept.departmentId !== props.departmentId
+        departmentOptions.value = data.list.filter(
+          (dept: DepartmentListDTO) => dept.departmentId !== props.departmentId
         );
       } else {
-        departmentOptions.value = data.data.list;
+        departmentOptions.value = data.list;
       }
     } catch (err) {
       // Message.error(t('departmentPage.message.fetchDepartmentsError'));
