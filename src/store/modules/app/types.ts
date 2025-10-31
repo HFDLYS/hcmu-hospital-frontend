@@ -69,7 +69,15 @@ export type PermissionType =
   | 'DISPLAY_PAGE'
   | 'DEL_TASK_FILE'
   | 'RWD_FILE'
-  | 'MANUAL_MG';
+  | 'MANUAL_MG'
+  | 'DEPART_MG_PAGE'
+  | 'ADD_DEPART'
+  | 'DEL_DEPART'
+  | 'ALT_DEPART'
+  | 'CHECK_DEPART'
+  | 'ADD_DOCTOR'
+  | 'ALT_DOCTOR'
+  | 'DEL_DOCTOR';
 
 // eslint-disable-next-line no-shadow
 export enum RoleType {

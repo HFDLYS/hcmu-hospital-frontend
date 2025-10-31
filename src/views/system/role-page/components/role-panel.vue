@@ -40,7 +40,11 @@
   const { loading, setLoading } = useLoading(true);
 
   const roleList = ref<RoleItem[][]>([[], [], []]);
-  const cardTitles = ref<string[]>(['rolePage.sysRole']);
+  const cardTitles = ref<string[]>([
+    'rolePage.sysRole',
+    'rolePage.docterRole',
+    'rolePage.patientRole',
+  ]);
 
   const props = defineProps({
     selectedRole: {
@@ -73,7 +77,7 @@
       const { data } = await getAllRoles({});
       const roleListAll = data as RoleItem[];
       roleListAll.forEach((item) => {
-        roleList.value[0].push(item);
+        roleList.value[item.type - 1].push(item);
       });
     } catch (err) {
       if (err instanceof Error) {

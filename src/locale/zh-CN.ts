@@ -36,7 +36,12 @@ export default {
   'menu.project': '项目中心',
   'menu.branch': '部门中心',
   'menu.competition': '比赛报名中心',
-  'menu.system': '系统设置',
+  'menu.system': '系统管理',
+  'menu.system.departmentPage': '科室管理',
+  'menu.system.importPage': '用户导入',
+  'menu.system.personnelPage': '人事管理',
+  'menu.system.logPage': '系统日志',
+  'menu.system.doctorProfilePage': '医生档案管理',
   'menu.display': '项目展示',
   'menu.about': '关于',
 

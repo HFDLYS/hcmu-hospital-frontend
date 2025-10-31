@@ -15,7 +15,7 @@ export interface LoginRes {
 export interface RegisterParams {
   userName: string;
   password: string;
-  nickname: string;
+  name: string;
   checkPassword: string;
   phone?: string;
   email: string;
