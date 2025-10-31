@@ -155,7 +155,7 @@
       emit('success');
       handleCancel();
     } catch (err) {
-      Message.error(t('importPage.modal.importError'));
+      Message.error(String(err));
     } finally {
       setLoading(false);
     }
