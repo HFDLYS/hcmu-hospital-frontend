@@ -104,6 +104,7 @@
 
       <!-- 表格 -->
       <a-table
+        v-model:selected-keys="selectedKeys"
         row-key="departmentId"
         :loading="loading"
         :pagination="pagination"
