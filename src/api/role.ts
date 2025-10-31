@@ -6,6 +6,7 @@ export interface RoleItem {
   roleId: number;
   roleName: string;
   roleInfo: string;
+  type: number;
   isDefault: number;
 }
 
