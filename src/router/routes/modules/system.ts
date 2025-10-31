@@ -62,17 +62,17 @@ const SYSTEM: AppRouteRecordRaw = {
         permission: 'LOG_PAGE',
       },
     },
-    // 医生档案管理页面 - 暂时注释，等待创建
-    // {
-    //   path: 'doctor-profile-page',
-    //   name: 'DoctorProfilePage',
-    //   component: () => import('@/views/system/doctor-profile-page/index.vue'),
-    //   meta: {
-    //     locale: 'menu.system.doctorProfilePage',
-    //     requiresPerm: true,
-    //     permission: 'ADD_DOCTOR',
-    //   },
-    // },
+    // 医生档案管理页面
+    {
+      path: 'doctor-profile-page',
+      name: 'DoctorProfilePage',
+      component: () => import('@/views/system/doctor-profile-page/index.vue'),
+      meta: {
+        locale: 'menu.system.doctorProfilePage',
+        requiresPerm: false, // 临时关闭权限验证，方便测试
+        permission: 'DOCTOR_MG_PAGE',
+      },
+    },
   ],
 };
 

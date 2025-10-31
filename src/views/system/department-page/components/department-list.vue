@@ -245,7 +245,7 @@
 
   // 行选择配置
   const rowSelection = reactive({
-    type: 'checkbox',
+    type: 'checkbox' as const,
     showCheckedAll: true,
     onlyCurrent: false,
     selectedRowKeys: selectedKeys,
